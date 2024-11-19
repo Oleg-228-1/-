@@ -1,0 +1,44 @@
+#operation= 'ENCODE'
+operation= 'DECODE'
+n = 5
+
+rotors = ['BDFHJLCPRTXVZNYEIWGAKMUSQO', 'AJDKSIRUXBLHWTMCQGZNPYFVOE', 'EKMFLGDQVZNTOWYHXUSPAIBRCJ']
+message = 'XPCXAUPHYQALKJMGKRWPGYHFTKRFFFNOUTZCABUAEHQLGXREZ'
+
+offset = ord('A')
+alphabetLen =len(rotors[0])
+
+if operation == 'DECODE':
+    #частина коду яка відповідає за зворотній хід через ротори
+    rotors.reverse()
+    for rotor in rotors:
+        decoded = ''
+        for index, symbol in enumerate(message):
+            alphabetNum = offset + rotor.index(symbol)
+            decoded += chr(alphabetNum)
+        message = decoded
+
+    #частина коду яка відповідає за зворотній хід через алфавітний зсув
+    decoded = ''
+    for index, symbol in enumerate(message):
+        alphabetNum = ord(symbol) - (n + index) % alphabetLen
+        if alphabetNum < offset:
+            alphabetNum = ord('Z') - (offset - alphabetNum - 1)
+        decoded += chr(alphabetNum)
+    print(decoded)
+else:
+    encoded = ''
+    Output = ''
+    for index, symbol in enumerate(message):
+        alphabetNum = n + index
+        alphabetNum = alphabetNum % alphabetLen + ord(symbol)
+        if alphabetNum > ord('Z'):
+            alphabetNum = offset + (alphabetNum - ord('Z') - 1)
+        encoded += chr(alphabetNum)
+    for rotor in rotors:
+        for index, symbol in enumerate(encoded):
+            alphabetNum = ord(symbol) - offset
+            # print(alphabetNum+index+n)
+            Output += rotor[alphabetNum]
+    print(Output)
+
