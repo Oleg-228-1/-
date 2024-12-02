@@ -1,9 +1,8 @@
 import hashlib
-
-#pincode 00067
+#pincode 00078
 hash = '86aa400b65433b608a9db30070ec60cd'
 pin = ''
-for i in range(100000):  # brute force
+for i in range(100000):  
     if i < 10000:
         DecPower = len(str(i))
         pin = (5 - DecPower) * '0' + str(i)
